@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method Specialist[]    findAll()
  * @method Specialist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SpecialistRepository extends ServiceEntityRepository implements PasswordUpgraderInterface,CodesInterface
+class SpecialistRepository extends ServiceEntityRepository implements PasswordUpgraderInterface,CodeInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

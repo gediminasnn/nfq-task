@@ -4,7 +4,7 @@
 namespace App\Repository;
 
 
-Interface CodesInterface
+Interface CodeInterface
 {
     public function getAllEntityCodes(): array;
 }
