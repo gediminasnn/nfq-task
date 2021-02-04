@@ -1,0 +1,26 @@
+
+{% block nav %}
+
+    <div class="col-md-12">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">NFQ Service Departament</a>
+            <div class="navbar-nav me-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('new_reservation_panel') }}">new</a></li>
+                </ul>
+            </div>
+            <div class="navbar-nav mr-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('customer_management') }}">CMP</a></li>
+                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('service_department') }}">SDP</a></li>
+                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('app_register') }}">Register</a></li>
+                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('app_login') }}">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </div>
+
+{% endblock %}

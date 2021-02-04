@@ -1,0 +1,50 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        <div class="col-lg-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    New Appointment Time
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">You have registered for new appointment!</h5>
+
+                    <p class="card-text">Save this text below to open this reservation time checker any time.</p>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Reservation link</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="ytets" readonly>
+                    </div><br>
+
+                    <p class="card-text">Time left before the visit : 1 Day 10 hours 54 seconds</p>
+
+
+                    <div class="row justify-content-center">
+                        <div class=" col-lg-2 m-1 rounded" style="background-color: lawngreen;">
+                            Your Queue <b>#105</b>
+                            <div class="rounded mb-2" style="background-color: whitesmoke">
+
+                                Specialist : <b>PVIE</b><br>
+                                Customer : <b>0139</b><br>
+                                Visit state : <b>pending</b><br>
+
+                            </div>
+                            <a href="#" class="btn btn-danger">Cancel reservation</a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="card-footer text-muted">
+                    Appointment time checker page
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
