@@ -42,8 +42,11 @@ class AppFixtures extends Fixture
                 $reservation->setCode("{$i}RSRV{$y}");
                 $reservation->setCustomer($customer);
                 $reservation->setSpecialist($specialist);
-                $reservation->setStartTime(new \DateTime());
-                $reservation->setEndTime(new \DateTime());
+                $date = new \DateTime();
+                $date->modify("+{$y} day");
+                $reservation->setStartTime($date);
+                $date->modify("+45 minutes");
+                $reservation->setEndTime($date);
                 $manager->persist($reservation);
             }
         }
