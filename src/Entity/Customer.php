@@ -23,7 +23,7 @@ class Customer
     private $code;
 
     /**
-     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="Customer", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="customer", cascade={"persist", "remove"})
      */
     private $reservation;
 
