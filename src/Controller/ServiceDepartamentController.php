@@ -8,18 +8,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class CustomerManagementController extends AbstractController
+class ServiceDepartamentController extends AbstractController
 {
+
     /**
-     * @Route("/customer/management", name="customer_management")
+     * @Route("/customers/", name="service_department")
      */
-    public function customerManagementPanel(UrlGeneratorInterface $urlGenerator): Response
+    public function serviceDepartamentPanel(UrlGeneratorInterface $urlGenerator): Response
     {
         if($this->isGranted('IS_ANONYMOUS')){
             return new RedirectResponse($urlGenerator->generate('home'));
         }
-        return $this->render('customer_management/index.html.twig');
+        return $this->render('service_department/index.twig');
     }
-
-
 }
