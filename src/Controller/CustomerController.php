@@ -11,7 +11,7 @@ class CustomerController extends AbstractController
     /**
      * @Route("/new", name="new_reservation_panel")
      */
-    public function newReservationPanele(): Response
+    public function newReservationPanel(): Response
     {
         return $this->render('customer/index.html.twig');
     }
