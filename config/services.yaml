@@ -29,3 +29,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    app.get.codes.specialist:
+        class: App\Repository\SpecialistRepository
+    app.get.codes.reservation:
+        class: App\Repository\ResrvationRepository
+    app.get.codes.customer:
+        class: App\Repository\CustomerRepository
+
+    App\Service\CodesInterface $specialist: '@app.get.codes.specialist'
+    App\Service\CodesInterface $reservation: '@app.get.codes.reservation'
+    App\Service\CodesInterface $customer: '@app.get.codes.customer'

@@ -4,12 +4,12 @@
 namespace App\Service;
 
 
-use App\Repository\CodeInterface;
+use App\Service\CodesInterface;
 
 class CodeGenerator
 {
 
-    public function generateCode(CodeInterface $repository): string
+    public function generateCode(CodesInterface $repository): string
     {
         $codes = $repository->getAllEntityCodes(); //get all codes as an array
 

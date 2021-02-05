@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Repository;
+namespace App\Service;
 
 
-Interface CodeInterface
+Interface CodesInterface
 {
     public function getAllEntityCodes(): array;
 }
