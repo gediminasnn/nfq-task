@@ -3,164 +3,47 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
             <div class=" text-center">
                 <div class="card-header">
-                    Specialists PVIE screen
+                    Specialists {{ specialist.code }} screen
                 </div>
                 <div class="card-body">
 
-                    <h2 class="card-text">Current time : 15:35</h2>
+                    <h2 class="card-text">Current time : {{ "now"|date("H:i") }}</h2>
 
-                    <h5 class="card-title">Current queue with specialist : PVIE</h5>
-                    <div class="row ">
+                    <h5 class="card-title">Current queue with specialist : {{ specialist.code }}</h5>
+                    <div class="row justify-content-center">
 
-                        <div class="col-lg-2">
-                            <h3>Queue : #1</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
+                        {% for reservation in reservations%}
+                            <div class="col-lg-2">
+                                <h3>Queue : #{{ loop.index }}</h3>
+                                <div class="rounded card">
+                                    <div class="card-header">
+                                        Appointment : <b>{{ reservation.code }}</b>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <p class="card-text">Specialist : <b>{{ specialist.code }}</b></p>
+                                        <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
+                                        <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
+                                        <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b></p>
+                                        <p>
+                                        {% if reservation.state == "pending" %}
+{#                                            TODO: Make working begin cancel buttons 4/10#}
+                                            <a href="#" class="btn btn-success">Begin</a>
+                                            <a href="#" class="btn btn-danger">Cancel</a>
+                                        {% elseif reservation.state == "begun" %}
+{#                                            TODO: Make working End cancel buttons 4/10#}
+                                            <a href="#" class="btn btn-warning">End</a>
+                                            <a href="#" class="btn btn-danger">Cancel</a></p>
+                                        {% endif %}
+                                        </p>
+                                    </div>
+
                                 </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-warning">End</a>
-                                    <a href="#" class="btn btn-danger">Cancel</a></p>
-                                </div>
-
                             </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <h3>Queue : #2</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-success">Begin</a>
-                                        <a href="#" class="btn btn-danger">Cancel</a></p>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <h3>Queue : #3</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-success">Begin</a>
-                                        <a href="#" class="btn btn-danger">Cancel</a></p>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <h3>Queue : #4</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-success">Begin</a>
-                                        <a href="#" class="btn btn-danger">Cancel</a></p>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <h3>Queue : #5</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-success">Begin</a>
-                                        <a href="#" class="btn btn-danger">Cancel</a></p>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <h3>Queue : #6</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-success">Begin</a>
-                                        <a href="#" class="btn btn-danger">Cancel</a></p>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <h3>Queue : #7</h3>
-                            <div class="rounded card">
-                                <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
-                                    <p><a href="#" class="btn btn-success">Begin</a>
-                                        <a href="#" class="btn btn-danger">Cancel</a></p>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-
-
-
-
-
+                        {% endfor %}
                     </div>
-
                 </div>
             </div>
 

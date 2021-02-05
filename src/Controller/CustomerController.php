@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CustomerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AbstractController
 {
+    private $customerRepository;
+    /**
+     * CustomerController constructor.
+     */
+    public function __construct(CustomerRepository $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
+
+//  TODO : make working newReservationPanel method
     /**
      * @Route("/new", name="new_reservation_panel")
      */
@@ -26,6 +37,10 @@ class CustomerController extends AbstractController
      */
     public function reservationPanel($code): Response
     {
-        return $this->render('customer/index.html.twig');
+        $customer = $this->customerRepository->findOneBy(['code' => $code]);
+
+        return $this->render('customer/index.html.twig', [
+            'customer' => $customer
+        ]);
     }
 }

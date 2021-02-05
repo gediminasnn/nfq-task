@@ -3,7 +3,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
         <div class="col-lg-12">
             <div class="card text-center">
                 <div class="card-header">
@@ -12,13 +11,13 @@
                 <div class="card-body">
                     <h5 class="card-title">You have registered for new appointment!</h5>
 
-                    <p class="card-text">Save this text below to open this reservation time checker any time.</p>
+                    <b class="card-text" style="color: crimson">Save this text below to open this reservation time checker any time.</b>
 
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Reservation link</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="ytets" readonly>
+                        <input type="text" class="form-control" aria-describedby="basic-addon1" value="{{ url('reservation_panel', {'code' : customer.code}) }}" readonly>
                     </div><br>
 
 
@@ -30,24 +29,28 @@
 
                     <div class="row justify-content-center">
                         <div class="col-lg-4">
+{#                            TODO: make dynamic queue number finder 7/10#}
                             <h3>Queue : #105</h3>
                             <div class="rounded card">
                                 <div class="card-header">
-                                    Appointment : <b>0X3OFK</b>
+                                    Appointment : <b>{{ customer.reservation.code }}</b>
                                 </div>
                                 <div class="card-body">
 
-                                    <p class="card-text">Specialist : <b>PVIE34</b></p>
-                                    <p class="card-text">Customer : <b>I32OXX</b></p>
-                                    <p class="card-text">Current visit state : <b>pending</b></p>
-                                    <p class="card-text">Starts at : <b>2021-03-11 07:41</b></p>
+                                    <p class="card-text">Specialist : <b>{{ customer.reservation.specialist.code }}</b></p>
+                                    <p class="card-text">Customer : <b>{{ customer.code }}</b></p>
+                                    <p class="card-text">Current visit state : <b>{{ customer.reservation.state }}</b></p>
+{#                                    TODO : make working starting/ending times , will do when newVisitButton will work#}
+                                    <p class="card-text">Starts at : <b>{{ customer.reservation.startTime|format_datetime() }}</b></p>
+                                    <p class="card-text">Ends at : <b>{{ customer.reservation.endTime|format_datetime() }}</b></p>
+{#                                    TODO : make working cancel reservation button 4/10#}
                                     <a href="#" class="btn btn-danger">Cancel reservation</a>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-
+{#                  TODO : make working time left before visit button 6/10#}
                     <p class="card-text">Time left before the visit : 1 Day 20 Hours 50 Minutes 30 Seconds</p>
 
                 </div>
