@@ -11,7 +11,7 @@ class CodeGenerator
 
     public function generateCode(CodeInterface $repository): string
     {
-        $codes = $repository->getAllEntityCodes(); //get all interface codes as an array
+        $codes = $repository->getAllEntityCodes(); //get all codes as an array
 
         $whileLoopState = true;
         while($whileLoopState === true){

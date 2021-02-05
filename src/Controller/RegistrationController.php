@@ -61,7 +61,7 @@ class RegistrationController extends AbstractController
 //    /**
 //     * @Route("/registerr", name="app_registerr")
 //     */
-//    public function registere(Request $request,UserPasswordEncoderInterface $passwordEncoder, CodeGenerator $codeGenerator, SpecialistRepository $repository): Response
+//    public function registerr(Request $request,UserPasswordEncoderInterface $passwordEncoder, CodeGenerator $codeGenerator, SpecialistRepository $repository): Response
 //    {
 //        $specialist = new Specialist();
 //        $form = $this->createForm(RegistrationFormTypePrototype::class, $specialist);

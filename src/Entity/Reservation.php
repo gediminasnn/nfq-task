@@ -35,7 +35,7 @@ class Reservation
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $state;
+    private $state = "pending";
 
     /**
      * @ORM\OneToOne(targetEntity=Customer::class, inversedBy="reservation", cascade={"persist", "remove"})
