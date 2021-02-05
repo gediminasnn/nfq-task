@@ -3,23 +3,17 @@
 namespace App\DataFixtures;
 
 use App\Entity\Specialist;
-use App\Service\CodesInterface;
-use App\Service\CodeGenerator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SpecialistsFixtures extends Fixture
 {
-    private $repository;
-    private $codeGenerator;
     private $passwordEncoder;
 
 
-    public function __construct(CodesInterface $specialist, CodeGenerator $codeGenerator, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
-        $this->repository = $specialist;
-        $this->codeGenerator = $codeGenerator;
         $this->passwordEncoder = $passwordEncoder;
     }
 
@@ -30,7 +24,7 @@ class SpecialistsFixtures extends Fixture
         {
             $user = new Specialist();
             $user->setEmail("specialist{$i}@gmail.com");
-            $user->setCode($this->codeGenerator->generateCode($this->repository));
+            $user->setCode("SPCLST{$i}");
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'specialist'
