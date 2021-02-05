@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use App\Entity\Specialist;
 use App\Service\CodesInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,6 +31,36 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
 
         return $allCodes;
     }
+
+    public function getFiveUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
+    {
+
+        return $this->createQueryBuilder('r')
+            ->where('r.specialist = :specId')
+            ->andWhere('r.state = :state1')
+            ->orWhere('r.state = :state2')
+            ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
+            ->orderBy('r.startTime','ASC')
+            ->setMaxResults('5')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getAllUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
+    {
+
+        return $this->createQueryBuilder('r')
+            ->where('r.specialist = :specId')
+            ->andWhere('r.state = :state1')
+            ->orWhere('r.state = :state2')
+            ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
+            ->orderBy('r.startTime','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
