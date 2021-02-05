@@ -4,8 +4,6 @@
 namespace App\Service;
 
 
-use App\Repository\CodesInterface;
-
 class CodeGenerator
 {
 

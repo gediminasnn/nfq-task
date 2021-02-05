@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Specialist;
+use App\Service\CodesInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method Specialist[]    findAll()
  * @method Specialist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SpecialistRepository extends ServiceEntityRepository implements PasswordUpgraderInterface,CodesInterface
+class SpecialistRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, CodesInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

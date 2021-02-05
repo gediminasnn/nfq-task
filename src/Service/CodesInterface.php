@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Repository;
+namespace App\Service;
 
 
 Interface CodesInterface
