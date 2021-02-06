@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\CustomerRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\SpecialistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,21 +13,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CustomerController extends AbstractController
 {
 
-    private $reservationRepository;
-    private $specialistRepository;
-
-    /**
-     * CustomerController constructor.
-     */
-    public function __construct(ReservationRepository $reservationRepository, SpecialistRepository $specialistRepository)
-    {
-        $this->reservationRepository = $reservationRepository;
-        $this->specialistRepository = $specialistRepository;
-    }
-
-
     /**
      * @Route("/", name="home")
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
      */
     public function newVisitButtonForCustomer(UrlGeneratorInterface $urlGenerator): Response
     {

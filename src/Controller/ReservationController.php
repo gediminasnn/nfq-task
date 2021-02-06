@@ -45,12 +45,19 @@ class ReservationController extends AbstractController
     public function reservationPanel($reservationCode): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+
+        //TODO : Make null pointer exception handling here
+        $reservationQueuePosition = $this->reservationRepository->getReservationQueuePosition($reservation);
+
         $startTime = $reservation->getStartTime();
         $timeLeft = $startTime->diff(new \DateTime('now'));
 
+
         return $this->render('reservation/reservation.html.twig', [
             'reservation' => $reservation,
+            'reservationQueuePosition' => $reservationQueuePosition,
             'timeLeft' => $timeLeft
+
         ]);
     }
 
@@ -65,7 +72,5 @@ class ReservationController extends AbstractController
         //TODO : throw success message 5/10
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
-
-
 
 }

@@ -61,12 +61,40 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ;
     }
 
+    public function getAllUpcomingValidReservations(): ?array
+    {
+
+        return $this->createQueryBuilder('r')
+            ->where('r.state = :state1')
+            ->orWhere('r.state = :state2')
+            ->setParameters(['state1' => 'pending', 'state2' => 'begun'])
+            ->orderBy('r.startTime','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function removeReservation(Reservation $reservation): void
     {
         $em = $this->getEntityManager();
         //TODO: Handle exceptions
         $em->remove($reservation);
         $em->flush();
+    }
+
+    public function getReservationQueuePosition(Reservation $reservation): ?int
+    {
+        $result = null;
+        $reservations = $this->getAllUpcomingValidReservationsBySpecialist($reservation->getSpecialist());
+        $count = count($reservations);
+        for($i = 1; $i <= $count; $i++){
+            if($reservations[$i-1]->getCode() === $reservation->getCode())
+            {
+                $result = $i;
+                break;
+            }
+        }
+        return $result;
     }
 
 
