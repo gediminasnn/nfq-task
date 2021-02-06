@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\CustomerRepository;
+use App\Repository\ReservationRepository;
+use App\Repository\SpecialistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,36 +13,30 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AbstractController
 {
-    private $customerRepository;
+
+    private $reservationRepository;
+    private $specialistRepository;
+
     /**
      * CustomerController constructor.
      */
-    public function __construct(CustomerRepository $customerRepository)
+    public function __construct(ReservationRepository $reservationRepository, SpecialistRepository $specialistRepository)
     {
-        $this->customerRepository = $customerRepository;
+        $this->reservationRepository = $reservationRepository;
+        $this->specialistRepository = $specialistRepository;
     }
 
-//  TODO : make working newReservationPanel method
+
     /**
-     * @Route("/new", name="new_reservation_panel")
+     * @Route("/", name="home")
      */
-    public function newReservationPanel(UrlGeneratorInterface $urlGenerator): Response
+    public function newVisitButtonForCustomer(UrlGeneratorInterface $urlGenerator): Response
     {
         if($this->isGranted('ROLE_SPECIALIST')){
-            return new RedirectResponse($urlGenerator->generate('customer_management'));
+            return new RedirectResponse($urlGenerator->generate('specialist'));
         }
-        return $this->render('customer/index.html.twig');
+        return $this->render('home/index.html.twig');
     }
 
-    /**
-     * @Route("/new/{code}", name="reservation_panel")
-     */
-    public function reservationPanel($code): Response
-    {
-        $customer = $this->customerRepository->findOneBy(['code' => $code]);
 
-        return $this->render('customer/index.html.twig', [
-            'customer' => $customer
-        ]);
-    }
 }

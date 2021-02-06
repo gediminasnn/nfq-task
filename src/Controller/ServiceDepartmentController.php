@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ServiceDepartamentController extends AbstractController
+class ServiceDepartmentController extends AbstractController
 {
     private $specialistRepository;
     private $reservationRepository;
@@ -22,7 +22,7 @@ class ServiceDepartamentController extends AbstractController
     }
 
     /**
-     * @Route("/customers/", name="service_department")
+     * @Route("/servicedeparatment/", name="service_department")
      */
     public function serviceDepartmentPanel(UrlGeneratorInterface $urlGenerator): Response
     {
@@ -32,7 +32,7 @@ class ServiceDepartamentController extends AbstractController
 
         $specialists = $this->specialistRepository->findAll();
 
-        return $this->render('service_department/index.html.twig', [
+        return $this->render('service_department/screen.html.twig', [
             'specialists' => $specialists,
             'reservationRepo' => $this->reservationRepository
         ]);

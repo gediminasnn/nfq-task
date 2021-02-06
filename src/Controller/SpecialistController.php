@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class CustomerManagementController extends AbstractController
+class SpecialistController extends AbstractController
 {
     /**
-     * @Route("/customer/management", name="customer_management")
+     * @Route("/customers/management", name="specialist")
      */
     public function customerManagementPanel(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
     {
@@ -24,11 +24,10 @@ class CustomerManagementController extends AbstractController
         $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
         $reservations = $reservationRepository->getAllUpcomingValidReservationsBySpecialist($specialist);
 
-        return $this->render('customer_management/index.html.twig', [
+        return $this->render('specialist/customermanagement.html.twig', [
             'specialist' => $specialist,
             'reservations' => $reservations
         ]);
     }
-
 
 }
