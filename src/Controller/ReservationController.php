@@ -13,16 +13,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ReservationController extends AbstractController
 {
 
-    private $customerRepository;
     private $reservationRepository;
 
     /**
      * ReservationController constructor.
+     * @param ReservationRepository $reservationRepository
      */
-    public function __construct(ReservationRepository $reservationRepository,CustomerRepository $customerRepository)
+    public function __construct(ReservationRepository $reservationRepository)
     {
         $this->reservationRepository = $reservationRepository;
-        $this->customerRepository = $customerRepository;
+
     }
 
     //  TODO : make working newReservationPanel method
@@ -38,7 +38,7 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reservations/{reservationCode}", name="reservations_panel")
+     * @Route("/reservations/{reservationCode}", name="reservation_panel")
      */
     public function reservationPanel($reservationCode): Response
     {
@@ -48,4 +48,19 @@ class ReservationController extends AbstractController
             'reservation' => $reservation
         ]);
     }
+
+    /**
+     * @Route("/reservations/delete/{reservationCode}", name="delete_reservation")
+     */
+    public function deleteReservation($reservationCode): Response
+    {
+        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        $this->reservationRepository->removeReservation($reservation);
+
+        //TODO : throw success message 5/10
+        return $this->render('home/index.html.twig');
+    }
+
+
+
 }

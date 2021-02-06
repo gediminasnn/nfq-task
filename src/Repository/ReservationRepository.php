@@ -61,6 +61,14 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ;
     }
 
+    public function removeReservation(Reservation $reservation): void
+    {
+        $em = $this->getEntityManager();
+        //TODO: Handle exceptions
+        $em->remove($reservation);
+        $em->flush();
+    }
+
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
