@@ -7,6 +7,7 @@ use App\Service\Reservation\ReservationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -41,17 +42,19 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/reservations/{reservationCode}", name="reservation_panel")
+     * @param $reservationCode
+     * @return Response
      */
     public function reservationPanel($reservationCode): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        if(!$reservation)
+        {
+            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
+        }
 
-        //TODO : Make null pointer exception handling here
         $reservationQueuePosition = $this->reservationRepository->getReservationQueuePosition($reservation);
-
-        $startTime = $reservation->getStartTime();
-        $timeLeft = $startTime->diff(new \DateTime('now'));
-
+        $timeLeft = $reservation->getStartTime()->diff(new \DateTime('now'));
 
         return $this->render('reservation/reservation.html.twig', [
             'reservation' => $reservation,
@@ -63,41 +66,50 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/reservations/update/{reservationCode}/begun", name="reservation_begun")
+     * @param $reservationCode
+     * @param ReservationService $reservationService
+     * @return Response
      */
-    public function reservationStateToBegun($reservationCode, ReservationService $reservationService): Response
+    public function changeReservationStateToBegun($reservationCode, ReservationService $reservationService): Response
     {
         if(!$this->isGranted('ROLE_SPECIALIST')){
             return new RedirectResponse($this->urlGenerator->generate('home'));
         }
 
         $reservationToUpdate = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
-        $currentSpecialist = $reservationToUpdate->getSpecialist();
-
-        //TODO : Make null pointer exception handling here
-        $upcomingValidReservations = $this->reservationRepository->getAllUpcomingValidReservationsBySpecialist($currentSpecialist);
-
-        $doesBegunReservationExist = $reservationService->checkIfBegunReservationExist($upcomingValidReservations);
-
-        if($doesBegunReservationExist === false)
+        if(!$reservationToUpdate)
         {
-            //TODO : Make null pointer exception handling here
+            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
+        }
+
+        $currentSpecialist = $reservationToUpdate->getSpecialist();
+        $upcomingValidReservations = $this->reservationRepository->getAllUpcomingValidReservationsBySpecialist($currentSpecialist);
+        $isThereActiveReservation = $reservationService->checkIfBegunReservationExist($upcomingValidReservations);
+
+        if($isThereActiveReservation === false)
+        {
+
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
         }
 
-        //TODO : make null pointer to exception to pass into home route
         return new RedirectResponse($this->urlGenerator->generate('home'));
 
     }
 
     /**
      * @Route("/reservations/delete/{reservationCode}", name="delete_reservation")
+     * @param $reservationCode
+     * @return Response
      */
     public function deleteReservation($reservationCode): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        if(!$reservation)
+        {
+            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
+        }
         $this->reservationRepository->removeReservation($reservation);
 
-        //TODO : throw success message 5/10
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 

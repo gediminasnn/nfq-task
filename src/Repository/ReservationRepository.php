@@ -6,6 +6,7 @@ use App\Entity\Reservation;
 use App\Entity\Specialist;
 use App\Service\CodeGenerator\CodesInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -77,9 +78,22 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     public function removeReservation(Reservation $reservation): void
     {
         $em = $this->getEntityManager();
-        //TODO: Handle exceptions
-        $em->remove($reservation);
-        $em->flush();
+
+        //TODO: figure out if this is correct
+        try {
+            $em->remove($reservation);
+        }
+        catch (ORMException $e) {
+            echo "Exception found - " . $e->getMessage();
+        }
+
+        try {
+            $em->flush();
+        }
+        catch(\Exception $e) {
+            echo "Exception found - " . $e->getMessage();
+        }
+
     }
 
     public function getReservationQueuePosition(Reservation $reservation): ?int
@@ -106,7 +120,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->setParameter(1, 'begun')
             ->setParameter(2, $reservation->getCode())
             ->getQuery();
-        $p = $q->execute();
+        $q->execute();
     }
 
 
