@@ -12,29 +12,21 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ServiceDepartmentController extends AbstractController
 {
-    private $specialistRepository;
-    private $reservationRepository;
-
-    public function __construct(SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository)
-    {
-        $this->specialistRepository = $specialistRepository;
-        $this->reservationRepository = $reservationRepository;
-    }
 
     /**
      * @Route("/servicedeparatment/", name="service_department")
      */
-    public function serviceDepartmentPanel(UrlGeneratorInterface $urlGenerator): Response
+    public function serviceDepartmentPanel(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
     {
         if($this->isGranted('IS_ANONYMOUS')){
             return new RedirectResponse($urlGenerator->generate('home'));
         }
 
-        $specialists = $this->specialistRepository->findAll();
+        $specialists = $specialistRepository->findAll();
 
         return $this->render('service_department/screen.html.twig', [
             'specialists' => $specialists,
-            'reservationRepo' => $this->reservationRepository
+            'reservationRepo' => $reservationRepository
         ]);
     }
 }

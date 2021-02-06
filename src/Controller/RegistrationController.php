@@ -6,7 +6,7 @@ use App\Entity\Specialist;
 use App\Form\RegistrationFormType;
 use App\Repository\SpecialistRepository;
 use App\Security\LoginFormAuthenticator;
-use App\Service\CodeGenerator;
+use App\Service\CodeGenerator\CodeGeneratorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +16,19 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
+    private $codeGenerator;
+    private $specialistRepository;
+
+    public function __construct(CodeGeneratorService $codeGenerator, SpecialistRepository $specialistRepository)
+    {
+        $this->codeGenerator = $codeGenerator;
+        $this->specialistRepository = $specialistRepository;
+    }
+
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, CodeGenerator $codeGenerator, SpecialistRepository $repository): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new Specialist();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -34,7 +43,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setCode($codeGenerator->generateCode($repository));
+            $user->setCode($this->codeGenerator->generateCode($this->specialistRepository));
             $user->setRoles(['ROLE_USER','ROLE_SPECIALIST']);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -61,7 +70,7 @@ class RegistrationController extends AbstractController
 //    /**
 //     * @Route("/registerr", name="app_registerr")
 //     */
-//    public function registerr(Request $request,UserPasswordEncoderInterface $passwordEncoder, CodeGenerator $codeGenerator, SpecialistRepository $repository): Response
+//    public function registerr(Request $request,UserPasswordEncoderInterface $passwordEncoder, CodeGeneratorService $codeGenerator, SpecialistRepository $repository): Response
 //    {
 //        $specialist = new Specialist();
 //        $form = $this->createForm(RegistrationFormTypePrototype::class, $specialist);

@@ -30,12 +30,12 @@
                                         <p>
                                         {% if reservation.state == "pending" %}
 {#                                            TODO: Make working begin cancel buttons 4/10#}
-                                            <a href="#" class="btn btn-success">Begin</a>
-                                            <a href="#" class="btn btn-danger">Cancel</a>
+                                            <a href="{{ path('reservation_begun', { reservationCode : reservation.code}) }}" class="btn btn-success">Begin</a>
+                                            <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-danger">Cancel</a>
                                         {% elseif reservation.state == "begun" %}
 {#                                            TODO: Make working End cancel buttons 4/10#}
-                                            <a href="#" class="btn btn-warning">End</a>
-                                            <a href="#" class="btn btn-danger">Cancel</a></p>
+                                            <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-warning">End</a>
+                                            <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-danger">Cancel</a>
                                         {% endif %}
                                         </p>
                                     </div>

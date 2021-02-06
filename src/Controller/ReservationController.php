@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\CustomerRepository;
 use App\Repository\ReservationRepository;
+use App\Service\Reservation\ReservationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +16,7 @@ class ReservationController extends AbstractController
     private $reservationRepository;
     private $urlGenerator;
 
+
     /**
      * ReservationController constructor.
      * @param ReservationRepository $reservationRepository
@@ -24,7 +25,6 @@ class ReservationController extends AbstractController
     {
         $this->reservationRepository = $reservationRepository;
         $this->urlGenerator = $urlGenerator;
-
     }
 
     //  TODO : make working newReservationPanel method
@@ -59,6 +59,34 @@ class ReservationController extends AbstractController
             'timeLeft' => $timeLeft
 
         ]);
+    }
+
+    /**
+     * @Route("/reservations/update/{reservationCode}/begun", name="reservation_begun")
+     */
+    public function reservationStateToBegun($reservationCode, ReservationService $reservationService): Response
+    {
+        if(!$this->isGranted('ROLE_SPECIALIST')){
+            return new RedirectResponse($this->urlGenerator->generate('home'));
+        }
+
+        $reservationToUpdate = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        $currentSpecialist = $reservationToUpdate->getSpecialist();
+
+        //TODO : Make null pointer exception handling here
+        $upcomingValidReservations = $this->reservationRepository->getAllUpcomingValidReservationsBySpecialist($currentSpecialist);
+
+        $doesBegunReservationExist = $reservationService->checkIfBegunReservationExist($upcomingValidReservations);
+
+        if($doesBegunReservationExist === false)
+        {
+            //TODO : Make null pointer exception handling here
+            $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
+        }
+
+        //TODO : make null pointer to exception to pass into home route
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+
     }
 
     /**

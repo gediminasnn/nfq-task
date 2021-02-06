@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Specialist;
-use App\Service\CodesInterface;
+use App\Service\CodeGenerator\CodesInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;

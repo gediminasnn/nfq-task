@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\CodeGenerator;
 
 
-use App\Service\CodesInterface;
+use App\Service\CodeGenerator\CodesInterface;
 
-class CodeGenerator
+class CodeGeneratorService
 {
 
     public function generateCode(CodesInterface $repository): string

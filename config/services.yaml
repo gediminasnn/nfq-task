@@ -37,6 +37,9 @@ services:
     app.get.codes.customer:
         class: App\Repository\CustomerRepository
 
-    App\Service\CodesInterface $specialist: '@app.get.codes.specialist'
-    App\Service\CodesInterface $reservation: '@app.get.codes.reservation'
-    App\Service\CodesInterface $customer: '@app.get.codes.customer'
+    App\Service\CodeGenerator\CodesInterface $specialist: '@app.get.codes.specialist'
+    App\Service\CodeGenerator\CodesInterface $reservation: '@app.get.codes.reservation'
+    App\Service\CodeGenerator\CodesInterface $customer: '@app.get.codes.customer'
+
+    App\Service\ReservationService:
+        autowire: true

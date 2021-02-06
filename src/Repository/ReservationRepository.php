@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Reservation;
 use App\Entity\Specialist;
-use App\Service\CodesInterface;
+use App\Service\CodeGenerator\CodesInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -95,6 +95,18 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             }
         }
         return $result;
+    }
+
+    public function updateReservationStateToBegun(Reservation $reservation): void
+    {
+        $qb = $this->createQueryBuilder('r');
+        $q = $qb->update()
+            ->set('r.state', '?1')
+            ->where('r.code = ?2')
+            ->setParameter(1, 'begun')
+            ->setParameter(2, $reservation->getCode())
+            ->getQuery();
+        $p = $q->execute();
     }
 
 
