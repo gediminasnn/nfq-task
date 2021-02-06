@@ -14,14 +14,16 @@ class ReservationController extends AbstractController
 {
 
     private $reservationRepository;
+    private $urlGenerator;
 
     /**
      * ReservationController constructor.
      * @param ReservationRepository $reservationRepository
      */
-    public function __construct(ReservationRepository $reservationRepository)
+    public function __construct(ReservationRepository $reservationRepository, UrlGeneratorInterface $urlGenerator)
     {
         $this->reservationRepository = $reservationRepository;
+        $this->urlGenerator = $urlGenerator;
 
     }
 
@@ -29,10 +31,10 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservations/new", name="new_reservation_panel")
      */
-    public function newReservationPanel(UrlGeneratorInterface $urlGenerator): Response
+    public function newReservationPanel(): Response
     {
         if($this->isGranted('ROLE_SPECIALIST')){
-            return new RedirectResponse($urlGenerator->generate('specialist'));
+            return new RedirectResponse($this->urlGenerator->generate('specialist'));
         }
         return $this->render();
     }
@@ -43,9 +45,12 @@ class ReservationController extends AbstractController
     public function reservationPanel($reservationCode): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        $startTime = $reservation->getStartTime();
+        $timeLeft = $startTime->diff(new \DateTime('now'));
 
         return $this->render('reservation/reservation.html.twig', [
-            'reservation' => $reservation
+            'reservation' => $reservation,
+            'timeLeft' => $timeLeft
         ]);
     }
 
@@ -58,7 +63,7 @@ class ReservationController extends AbstractController
         $this->reservationRepository->removeReservation($reservation);
 
         //TODO : throw success message 5/10
-        return $this->render('home/index.html.twig');
+        return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 
 
