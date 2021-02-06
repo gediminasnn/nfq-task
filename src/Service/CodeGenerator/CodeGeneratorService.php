@@ -4,7 +4,6 @@
 namespace App\Service\CodeGenerator;
 
 
-use App\Service\CodeGenerator\CodesInterface;
 
 class CodeGeneratorService
 {
