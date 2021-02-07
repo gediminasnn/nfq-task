@@ -84,16 +84,13 @@ class ReservationController extends AbstractController
 
         $currentSpecialist = $reservationToUpdate->getSpecialist();
         $upcomingValidReservations = $this->reservationRepository->getAllUpcomingValidReservationsBySpecialist($currentSpecialist);
-        $isThereActiveReservation = $reservationService->checkIfBegunReservationExist($upcomingValidReservations);
 
-        if($isThereActiveReservation === false)
+        if($reservationService->checkIfBegunReservationExist($upcomingValidReservations) === false)
         {
-
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
         }
 
         return new RedirectResponse($this->urlGenerator->generate('home'));
-
     }
 
     /**
