@@ -57,21 +57,6 @@ class SpecialistController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/customers/management/update", name="customer_management_update")
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param ReservationService $reservationService
-     * @return Response
-     */
-    public function customerManagementUpdate(UrlGeneratorInterface $urlGenerator, ReservationService $reservationService): Response
-    {
-        if ($this->isGranted('IS_ANONYMOUS')) {
-            return new RedirectResponse($urlGenerator->generate('home'));
-        }
 
-        $reservationService->endPastReservations();
-
-        return new RedirectResponse($urlGenerator->generate('customer_management'));
-    }
 
 }
