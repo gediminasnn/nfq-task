@@ -25,8 +25,8 @@ class SpecialistController extends AbstractController
         }
 
         $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
-        $reservations = $reservationRepository->getAllUpcomingPendingReservationsBySpecialist($specialist);
-        $begunReservations = $reservationRepository->getAllBegunReservationBySpecialist($specialist);
+        $reservations = $reservationRepository->findAllUpcomingPendingReservationsBySpecialist($specialist);
+        $begunReservations = $reservationRepository->findAllBegunReservationBySpecialist($specialist);
         $alertMessage = $request->query->get('alertMessage');
 
         return $this->render('specialist/customermanagement.html.twig', [
@@ -47,7 +47,7 @@ class SpecialistController extends AbstractController
         }
 
         $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
-        $reservations = $reservationRepository->getAllPastReservations($specialist);
+        $reservations = $reservationRepository->findAllPastReservations($specialist);
 
         return $this->render('specialist/customermanagement.html.twig', [
             'specialist' => $specialist,

@@ -22,7 +22,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         parent::__construct($registry, Reservation::class);
     }
 
-    public function getAllEntityCodes(): array
+    public function findAllEntityCodes(): array
     {
         return $this->createQueryBuilder('r')
             ->select('code')
@@ -30,7 +30,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->getResult();
     }
 
-    public function getFiveUpcomingPendingReservationsBySpecialist(Specialist $specialist): ?array
+    public function findFiveUpcomingPendingReservationsBySpecialist(Specialist $specialist): ?array
     {
 
         return $this->createQueryBuilder('r')
@@ -45,7 +45,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     }
 
 
-    public function getAllUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
+    public function findAllUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
     {
         return $this->createQueryBuilder('r')
             ->where('r.state = :state1')
@@ -59,7 +59,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     }
 
 
-    public function getAllUpcomingPendingReservationsBySpecialist(Specialist $specialist): ?array
+    public function findAllUpcomingPendingReservationsBySpecialist(Specialist $specialist): ?array
     {
         return $this->createQueryBuilder('r')
             ->where('r.specialist = :specId')
@@ -71,7 +71,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->getResult();
     }
 
-    public function getAllBegunReservationBySpecialist(Specialist $specialist): ?array
+    public function findAllBegunReservationBySpecialist(Specialist $specialist): ?array
     {
         return $this->createQueryBuilder('r')
             ->where('r.specialist = :specId')
@@ -83,7 +83,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->getResult();
     }
 
-    public function getAllUpcomingValidReservations(): ?array
+    public function findAllUpcomingValidReservations(): ?array
     {
 
         return $this->createQueryBuilder('r')
@@ -114,10 +114,10 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
 
     }
 
-    public function getReservationQueuePosition(Reservation $reservation): ?int
+    public function findReservationQueuePosition(Reservation $reservation): ?int
     {
         $result = null;
-        $reservations = $this->getAllUpcomingPendingReservationsBySpecialist($reservation->getSpecialist());
+        $reservations = $this->findAllUpcomingPendingReservationsBySpecialist($reservation->getSpecialist());
         $count = count($reservations);
         for ($i = 1; $i <= $count; $i++) {
             if ($reservations[$i - 1]->getCode() === $reservation->getCode()) {
@@ -164,7 +164,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         $q->execute();
     }
 
-    public function getAllPastReservations(Specialist $specialist): ?array
+    public function findAllPastReservations(Specialist $specialist): ?array
     {
         return $this->createQueryBuilder('r')
             ->where('r.specialist = :specId')

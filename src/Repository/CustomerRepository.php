@@ -20,7 +20,7 @@ class CustomerRepository extends ServiceEntityRepository implements CodesInterfa
         parent::__construct($registry, Customer::class);
     }
 
-    public function getAllEntityCodes(): array
+    public function findAllEntityCodes(): array
     {
         return $this->createQueryBuilder('r')
             ->select('code')

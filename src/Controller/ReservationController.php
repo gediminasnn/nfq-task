@@ -41,28 +41,7 @@ class ReservationController extends AbstractController
         return $this->render();
     }
 
-    /**
-     * @Route("/reservations/{reservationCode}", name="reservation_panel")
-     * @param $reservationCode
-     * @return Response
-     */
-    public function reservationPanel($reservationCode): Response
-    {
-        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
-        if (!$reservation) {
-            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
-        }
 
-        $reservationQueuePosition = $this->reservationRepository->getReservationQueuePosition($reservation);
-        $timeLeft = $reservation->getStartTime()->diff(new \DateTime('now'));
-
-        return $this->render('reservation/reservation.html.twig', [
-            'reservation' => $reservation,
-            'reservationQueuePosition' => $reservationQueuePosition,
-            'timeLeft' => $timeLeft
-
-        ]);
-    }
 
     /**
      * @Route("/reservations/update/{reservationCode}/begun", name="begin_reservation")
@@ -82,7 +61,7 @@ class ReservationController extends AbstractController
         }
 
         $currentSpecialist = $reservationToUpdate->getSpecialist();
-        $upcomingValidReservations = $this->reservationRepository->getAllUpcomingValidReservationsBySpecialist($currentSpecialist);
+        $upcomingValidReservations = $this->reservationRepository->findAllUpcomingValidReservationsBySpecialist($currentSpecialist);
 
         if ($reservationService->checkIfBegunReservationExist($upcomingValidReservations) === false) {
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);

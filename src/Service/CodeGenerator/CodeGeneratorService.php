@@ -9,7 +9,7 @@ class CodeGeneratorService
 
     public function generateCode(CodesInterface $repository): string
     {
-        $codes = $repository->getAllEntityCodes(); //get all codes as an array
+        $codes = $repository->findAllEntityCodes(); //get all codes as an array
 
         $whileLoopState = true;
         while ($whileLoopState === true) {

@@ -23,8 +23,8 @@
                             {% for specialist in specialists %}
                                 <h5 class="card-title">Current queue with specialist : {{ specialist.code }}</h5>
 
-                                {% if reservationRepo.getAllBegunReservationBySpecialist(specialist) %}
-                                    {% for reservation in reservationRepo.getAllBegunReservationBySpecialist(specialist) %}
+                                {% if reservationRepo.findAllBegunReservationBySpecialist(specialist) %}
+                                    {% for reservation in reservationRepo.findAllBegunReservationBySpecialist(specialist) %}
                                         <div class="col-lg-2">
                                             <h3 style="color: #2ca02c">ACTIVE</h3>
                                             <div class="rounded card">
@@ -43,7 +43,7 @@
                                     {% endfor %}
                                 {% endif %}
 
-                                {% for reservation in reservationRepo.getFiveUpcomingPendingReservationsBySpecialist(specialist) %}
+                                {% for reservation in reservationRepo.findFiveUpcomingPendingReservationsBySpecialist(specialist) %}
                                     <div class="col-lg-2">
                                         <h3>Queue : #{{ loop.index }}</h3>
                                         <div class="rounded card">
