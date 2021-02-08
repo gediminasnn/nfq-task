@@ -24,13 +24,10 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
 
     public function getAllEntityCodes(): array
     {
-        $allCodes = [];
-        $reservations = $this->findAll();
-        foreach ($reservations as $reservation) {
-            $allCodes[] = $reservation->getCode();
-        }
-
-        return $allCodes;
+        return $this->createQueryBuilder('r')
+            ->select('code')
+            ->getQuery()
+            ->getResult();
     }
 
     public function getFiveUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
@@ -47,14 +44,37 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->getResult();
     }
 
+
     public function getAllUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
     {
-
         return $this->createQueryBuilder('r')
             ->where('r.specialist = :specId')
             ->andWhere('r.state = :state1')
             ->orWhere('r.state = :state2')
             ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
+            ->orderBy('r.startTime', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function getAllUpcomingPendingReservationsBySpecialist(Specialist $specialist): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.specialist = :specId')
+            ->andWhere('r.state = :state1')
+            ->setParameters(['specId' => $specialist, 'state1' => 'pending'])
+            ->orderBy('r.startTime', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllBegunReservationBySpecialist(Specialist $specialist): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.specialist = :specId')
+            ->andWhere('r.state = :state1')
+            ->setParameters(['specId' => $specialist, 'state1' => 'begun'])
             ->orderBy('r.startTime', 'ASC')
             ->getQuery()
             ->getResult();
@@ -94,7 +114,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     public function getReservationQueuePosition(Reservation $reservation): ?int
     {
         $result = null;
-        $reservations = $this->getAllUpcomingValidReservationsBySpecialist($reservation->getSpecialist());
+        $reservations = $this->getAllUpcomingPendingReservationsBySpecialist($reservation->getSpecialist());
         $count = count($reservations);
         for ($i = 1; $i <= $count; $i++) {
             if ($reservations[$i - 1]->getCode() === $reservation->getCode()) {

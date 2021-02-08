@@ -7,7 +7,6 @@ use App\Repository\SpecialistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -22,13 +21,14 @@ class SpecialistController extends AbstractController
             return new RedirectResponse($urlGenerator->generate('home'));
         }
 
-
         $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
-        $reservations = $reservationRepository->getAllUpcomingValidReservationsBySpecialist($specialist);
+        $reservations = $reservationRepository->getAllUpcomingPendingReservationsBySpecialist($specialist);
+        $begunReservations = $reservationRepository->getAllBegunReservationBySpecialist($specialist);
 
         return $this->render('specialist/customermanagement.html.twig', [
             'specialist' => $specialist,
-            'reservations' => $reservations
+            'reservations' => $reservations,
+            'begunReservations' => $begunReservations
         ]);
     }
 

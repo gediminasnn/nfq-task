@@ -88,6 +88,7 @@ class ReservationController extends AbstractController
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
         }
 
+        //TODO : add message on null
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 

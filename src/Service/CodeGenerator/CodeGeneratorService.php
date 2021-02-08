@@ -24,7 +24,7 @@ class CodeGeneratorService
         return $newCode;
     }
 
-    public function generateRandomString($length = 6, $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    public function generateRandomString($length = 6, $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'): string
     {
         $charactersLength = strlen($characters);
         $randomString = '';
