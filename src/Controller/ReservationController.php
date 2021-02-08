@@ -71,7 +71,6 @@ class ReservationController extends AbstractController
             $alertMessage = "Active appointment already exist!";
         }
 
-        //TODO : add message on null
         return new RedirectResponse($this->urlGenerator->generate('customer_management',['alertMessage' => $alertMessage]));
     }
 

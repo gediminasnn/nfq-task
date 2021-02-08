@@ -39,7 +39,6 @@
                                     <p class="card-text">Specialist : <b>{{ reservation.specialist.code }}</b></p>
                                     <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
                                     <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
-{#                                    TODO : make working starting/ending times , will do when newVisitButton will work#}
                                     <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b></p>
                                     <p class="card-text">Ends at : <b>{{ reservation.endTime|format_datetime() }}</b></p>
                                     <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-danger">Cancel reservation</a>
