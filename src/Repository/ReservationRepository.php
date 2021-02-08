@@ -117,6 +117,30 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         $q->execute();
     }
 
+    public function updateReservationStateToCanceled(Reservation $reservation): void
+    {
+        $qb = $this->createQueryBuilder('r');
+        $q = $qb->update()
+            ->set('r.state', '?1')
+            ->where('r.code = ?2')
+            ->setParameter(1, 'canceled')
+            ->setParameter(2, $reservation->getCode())
+            ->getQuery();
+        $q->execute();
+    }
+
+    public function updateReservationStateToEnded(Reservation $reservation): void
+    {
+        $qb = $this->createQueryBuilder('r');
+        $q = $qb->update()
+            ->set('r.state', '?1')
+            ->where('r.code = ?2')
+            ->setParameter(1, 'ended')
+            ->setParameter(2, $reservation->getCode())
+            ->getQuery();
+        $q->execute();
+    }
+
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects

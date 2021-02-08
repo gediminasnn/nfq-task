@@ -27,14 +27,16 @@
                                 </p>
                                 <p>
                                     {% if reservation.state == "pending" %}
-                                        <a href="{{ path('reservation_begun', { reservationCode : reservation.code}) }}"
+                                        <a href="{{ path('begin_reservation', { reservationCode : reservation.code}) }}"
                                            class="btn btn-success">Begin</a>
-                                        <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}"
+
+                                        <a href="{{ path('cancel_reservation', { reservationCode : reservation.code}) }}"
                                            class="btn btn-danger">Cancel</a>
                                     {% elseif reservation.state == "begun" %}
-                                        <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}"
+                                        <a href="{{ path('end_reservation', { reservationCode : reservation.code}) }}"
                                            class="btn btn-warning">End</a>
-                                        <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}"
+
+                                        <a href="{{ path('cancel_reservation', { reservationCode : reservation.code}) }}"
                                            class="btn btn-danger">Cancel</a>
                                     {% endif %}
                                 </p>

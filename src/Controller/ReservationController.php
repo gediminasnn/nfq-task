@@ -65,7 +65,7 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reservations/update/{reservationCode}/begun", name="reservation_begun")
+     * @Route("/reservations/update/{reservationCode}/begun", name="begin_reservation")
      * @param $reservationCode
      * @param ReservationService $reservationService
      * @return Response
@@ -87,6 +87,38 @@ class ReservationController extends AbstractController
         if ($reservationService->checkIfBegunReservationExist($upcomingValidReservations) === false) {
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
         }
+
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+    }
+
+    /**
+     * @Route("/reservations/begun/{reservationCode}", name="end_reservation")
+     * @param $reservationCode
+     * @return Response
+     */
+    public function changeReservationStateToEnded($reservationCode): Response
+    {
+        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        if (!$reservation) {
+            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
+        }
+        $this->reservationRepository->updateReservationStateToEnded($reservation);
+
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+    }
+
+    /**
+     * @Route("/reservations/cancel/{reservationCode}", name="cancel_reservation")
+     * @param $reservationCode
+     * @return Response
+     */
+    public function changeReservationStateToCanceled($reservationCode): Response
+    {
+        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+        if (!$reservation) {
+            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
+        }
+        $this->reservationRepository->updateReservationStateToCanceled($reservation);
 
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
