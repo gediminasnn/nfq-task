@@ -93,11 +93,11 @@ class ReservationController extends AbstractController
         }
 
         //TODO : add message on null
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('customer_management',['alertMessage' => $alertMessage]));
     }
 
     /**
-     * @Route("/reservations/begun/{reservationCode}", name="end_reservation")
+     * @Route("/reservations/end/{reservationCode}", name="end_reservation")
      * @param $reservationCode
      * @return Response
      */
