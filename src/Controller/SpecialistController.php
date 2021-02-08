@@ -17,7 +17,7 @@ class SpecialistController extends AbstractController
      */
     public function customerManagementPanel(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
     {
-        if($this->isGranted('IS_ANONYMOUS')){
+        if ($this->isGranted('IS_ANONYMOUS')) {
             return new RedirectResponse($urlGenerator->generate('home'));
         }
 

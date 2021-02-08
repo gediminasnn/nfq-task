@@ -15,10 +15,8 @@ class ReservationService
     public function checkIfBegunReservationExist(array $reservations): bool
     {
         $doesBegunReservationExist = false;
-        foreach ($reservations as $reservation)
-        {
-            if($reservation->getState() === "begun")
-            {
+        foreach ($reservations as $reservation) {
+            if ($reservation->getState() === "begun") {
                 $doesBegunReservationExist = true;
                 break;
             }

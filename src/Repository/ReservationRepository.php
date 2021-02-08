@@ -26,7 +26,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     {
         $allCodes = [];
         $reservations = $this->findAll();
-        foreach ($reservations as $reservation){
+        foreach ($reservations as $reservation) {
             $allCodes[] = $reservation->getCode();
         }
 
@@ -41,11 +41,10 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->andWhere('r.state = :state1')
             ->orWhere('r.state = :state2')
             ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
-            ->orderBy('r.startTime','ASC')
+            ->orderBy('r.startTime', 'ASC')
             ->setMaxResults('5')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function getAllUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
@@ -56,10 +55,9 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->andWhere('r.state = :state1')
             ->orWhere('r.state = :state2')
             ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
-            ->orderBy('r.startTime','ASC')
+            ->orderBy('r.startTime', 'ASC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function getAllUpcomingValidReservations(): ?array
@@ -69,10 +67,9 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->where('r.state = :state1')
             ->orWhere('r.state = :state2')
             ->setParameters(['state1' => 'pending', 'state2' => 'begun'])
-            ->orderBy('r.startTime','ASC')
+            ->orderBy('r.startTime', 'ASC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function removeReservation(Reservation $reservation): void
@@ -82,15 +79,13 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         //TODO: figure out if this is correct
         try {
             $em->remove($reservation);
-        }
-        catch (ORMException $e) {
+        } catch (ORMException $e) {
             echo "Exception found - " . $e->getMessage();
         }
 
         try {
             $em->flush();
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             echo "Exception found - " . $e->getMessage();
         }
 
@@ -101,9 +96,8 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         $result = null;
         $reservations = $this->getAllUpcomingValidReservationsBySpecialist($reservation->getSpecialist());
         $count = count($reservations);
-        for($i = 1; $i <= $count; $i++){
-            if($reservations[$i-1]->getCode() === $reservation->getCode())
-            {
+        for ($i = 1; $i <= $count; $i++) {
+            if ($reservations[$i - 1]->getCode() === $reservation->getCode()) {
                 $result = $i;
                 break;
             }

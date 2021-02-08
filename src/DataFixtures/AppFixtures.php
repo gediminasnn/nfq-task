@@ -12,15 +12,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AppFixtures extends Fixture
 {
     private $passwordEncoder;
+
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }
+
     public function load(ObjectManager $manager)
     {
         //Creating 3 Specialists
-        for($i = 1; $i<=3;$i++)
-        {
+        for ($i = 1; $i <= 3; $i++) {
             $specialist = new Specialist();
             $specialist->setEmail("specialist{$i}@gmail.com");
             $specialist->setCode("SPCLS{$i}");
@@ -32,8 +33,7 @@ class AppFixtures extends Fixture
             $manager->persist($specialist);
 
             //Creating 6 Reservations with 6 different customers with current loop cycle specialist
-            for($y = 1; $y<=6; $y++)
-            {
+            for ($y = 1; $y <= 6; $y++) {
                 $customer = new Customer();
                 $customer->setCode("{$i}CSTM{$y}");
                 $manager->persist($customer);

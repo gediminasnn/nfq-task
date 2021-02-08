@@ -29,12 +29,13 @@ class ReservationController extends AbstractController
     }
 
     //  TODO : make working newReservationPanel method
+
     /**
      * @Route("/reservations/new", name="new_reservation_panel")
      */
     public function newReservationPanel(): Response
     {
-        if($this->isGranted('ROLE_SPECIALIST')){
+        if ($this->isGranted('ROLE_SPECIALIST')) {
             return new RedirectResponse($this->urlGenerator->generate('specialist'));
         }
         return $this->render();
@@ -48,8 +49,7 @@ class ReservationController extends AbstractController
     public function reservationPanel($reservationCode): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
-        if(!$reservation)
-        {
+        if (!$reservation) {
             throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
         }
 
@@ -72,21 +72,19 @@ class ReservationController extends AbstractController
      */
     public function changeReservationStateToBegun($reservationCode, ReservationService $reservationService): Response
     {
-        if(!$this->isGranted('ROLE_SPECIALIST')){
+        if (!$this->isGranted('ROLE_SPECIALIST')) {
             return new RedirectResponse($this->urlGenerator->generate('home'));
         }
 
         $reservationToUpdate = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
-        if(!$reservationToUpdate)
-        {
+        if (!$reservationToUpdate) {
             throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
         }
 
         $currentSpecialist = $reservationToUpdate->getSpecialist();
         $upcomingValidReservations = $this->reservationRepository->getAllUpcomingValidReservationsBySpecialist($currentSpecialist);
 
-        if($reservationService->checkIfBegunReservationExist($upcomingValidReservations) === false)
-        {
+        if ($reservationService->checkIfBegunReservationExist($upcomingValidReservations) === false) {
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
         }
 
@@ -101,8 +99,7 @@ class ReservationController extends AbstractController
     public function deleteReservation($reservationCode): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
-        if(!$reservation)
-        {
+        if (!$reservation) {
             throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
         }
         $this->reservationRepository->removeReservation($reservation);
