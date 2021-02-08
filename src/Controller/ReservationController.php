@@ -86,6 +86,10 @@ class ReservationController extends AbstractController
 
         if ($reservationService->checkIfBegunReservationExist($upcomingValidReservations) === false) {
             $this->reservationRepository->updateReservationStateToBegun($reservationToUpdate);
+            $alertMessage = null;
+        }
+        else {
+            $alertMessage = "Active appointment already exist!";
         }
 
         //TODO : add message on null
