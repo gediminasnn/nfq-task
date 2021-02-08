@@ -51,7 +51,8 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->where('r.state = :state1')
             ->orWhere('r.state = :state2')
             ->andWhere('r.specialist = :specId')
-            ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
+            ->andWhere('r.endTime > :now')
+            ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun', 'now' => date("Y-m-d H:i:s")])
             ->orderBy('r.startTime', 'ASC')
             ->getQuery()
             ->getResult();
