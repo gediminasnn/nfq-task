@@ -4,7 +4,6 @@
 namespace App\Service\CodeGenerator;
 
 
-
 class CodeGeneratorService
 {
 
@@ -13,12 +12,11 @@ class CodeGeneratorService
         $codes = $repository->getAllEntityCodes(); //get all codes as an array
 
         $whileLoopState = true;
-        while($whileLoopState === true){
+        while ($whileLoopState === true) {
             $newCode = $this->generateRandomString();
             $whileLoopState = false;
-            foreach ($codes as $code)
-            {
-                if($newCode === $code){
+            foreach ($codes as $code) {
+                if ($newCode === $code) {
                     $whileLoopState = true;
                 }
             }

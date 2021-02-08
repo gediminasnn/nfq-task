@@ -18,13 +18,13 @@ class ServiceDepartmentController extends AbstractController
      */
     public function serviceDepartmentPanel(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
     {
-        if($this->isGranted('IS_ANONYMOUS')){
+        if ($this->isGranted('IS_ANONYMOUS')) {
             return new RedirectResponse($urlGenerator->generate('home'));
         }
 
         $specialists = $specialistRepository->findAll();
 
-        return $this->render('service_department/screen.html.twig', [
+        return $this->render('specialist/servicedepartmentscreen.html.twig', [
             'specialists' => $specialists,
             'reservationRepo' => $reservationRepository
         ]);

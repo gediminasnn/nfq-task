@@ -24,7 +24,7 @@ class CustomerRepository extends ServiceEntityRepository implements CodesInterfa
     {
         $allCodes = [];
         $customers = $this->findAll();
-        foreach ($customers as $customer){
+        foreach ($customers as $customer) {
             $allCodes[] = $customer->getCode();
         }
 

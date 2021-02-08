@@ -1,49 +1,51 @@
-
-
 {% extends 'base.html.twig' %}
 
 {% block body %}
-            <div class=" text-center">
-                <div class="card-header">
-                    Specialists {{ specialist.code }} screen
-                </div>
-                <div class="card-body">
+    <div class=" text-center">
+        <div class="card-header">
+            Specialists {{ specialist.code }} screen
+        </div>
+        <div class="card-body">
 
-                    <h2 class="card-text">Current time : {{ "now"|date("H:i") }}</h2>
+            <h2 class="card-text">Current time : {{ "now"|date("H:i") }}</h2>
+            <h5 class="card-title">Current queue with specialist : {{ specialist.code }}</h5>
+            <div class="row justify-content-center">
 
-                    <h5 class="card-title">Current queue with specialist : {{ specialist.code }}</h5>
-                    <div class="row justify-content-center">
-
-                        {% for reservation in reservations%}
-                            <div class="col-lg-2">
-                                <h3>Queue : #{{ loop.index }}</h3>
-                                <div class="rounded card">
-                                    <div class="card-header">
-                                        Appointment : <b>{{ reservation.code }}</b>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <p class="card-text">Specialist : <b>{{ specialist.code }}</b></p>
-                                        <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
-                                        <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
-                                        <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b></p>
-                                        <p>
-                                        {% if reservation.state == "pending" %}
-                                            <a href="{{ path('reservation_begun', { reservationCode : reservation.code}) }}" class="btn btn-success">Begin</a>
-                                            <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-danger">Cancel</a>
-                                        {% elseif reservation.state == "begun" %}
-                                            <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-warning">End</a>
-                                            <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}" class="btn btn-danger">Cancel</a>
-                                        {% endif %}
-                                        </p>
-                                    </div>
-
-                                </div>
+                {% for reservation in reservations %}
+                    <div class="col-lg-2">
+                        <h3>#{{ loop.index }}</h3>
+                        <div class="rounded card">
+                            <div class="card-header">
+                                Appointment : <b>{{ reservation.code }}</b>
                             </div>
-                        {% endfor %}
+                            <div class="card-body">
+
+                                <p class="card-text">Specialist : <b>{{ specialist.code }}</b></p>
+                                <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
+                                <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
+                                <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b>
+                                </p>
+                                <p>
+                                    {% if reservation.state == "pending" %}
+                                        <a href="{{ path('reservation_begun', { reservationCode : reservation.code}) }}"
+                                           class="btn btn-success">Begin</a>
+                                        <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}"
+                                           class="btn btn-danger">Cancel</a>
+                                    {% elseif reservation.state == "begun" %}
+                                        <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}"
+                                           class="btn btn-warning">End</a>
+                                        <a href="{{ path('delete_reservation', { reservationCode : reservation.code}) }}"
+                                           class="btn btn-danger">Cancel</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
+        </div>
+    </div>
 
 
 {% endblock %}

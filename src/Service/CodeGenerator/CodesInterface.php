@@ -4,7 +4,7 @@
 namespace App\Service\CodeGenerator;
 
 
-Interface CodesInterface
+interface CodesInterface
 {
     public function getAllEntityCodes(): array;
 }

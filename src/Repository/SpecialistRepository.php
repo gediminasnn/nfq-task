@@ -16,9 +16,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method Specialist[]    findAll()
  * @method Specialist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-
-
-
 class SpecialistRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, CodesInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -42,13 +39,13 @@ class SpecialistRepository extends ServiceEntityRepository implements PasswordUp
 
     public function getAllEntityCodes(): array
     {
-         $allCodes = [];
-         $specialists = $this->findAll();
-         foreach ($specialists as $specialist){
+        $allCodes = [];
+        $specialists = $this->findAll();
+        foreach ($specialists as $specialist) {
             $allCodes[] = $specialist->getCode();
-         }
+        }
 
-         return $allCodes;
+        return $allCodes;
     }
 
     // /**
