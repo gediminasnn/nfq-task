@@ -43,7 +43,7 @@
                                     {% endfor %}
                                 {% endif %}
 
-                                {% for reservation in reservationRepo.getFiveUpcomingValidReservationsBySpecialist(specialist) %}
+                                {% for reservation in reservationRepo.getFiveUpcomingPendingReservationsBySpecialist(specialist) %}
                                     <div class="col-lg-2">
                                         <h3>Queue : #{{ loop.index }}</h3>
                                         <div class="rounded card">
