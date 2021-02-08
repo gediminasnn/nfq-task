@@ -160,7 +160,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         $q->execute();
     }
 
-    public function getAllPastReservationsBySpecialist(Specialist $specialist): ?array
+    public function getAllPastReservations(Specialist $specialist): ?array
     {
         return $this->createQueryBuilder('r')
             ->where('r.specialist = :specId')
@@ -170,7 +170,6 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->getQuery()
             ->getResult();
     }
-
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */

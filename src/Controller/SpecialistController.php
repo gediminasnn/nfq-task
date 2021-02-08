@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\ReservationRepository;
 use App\Repository\SpecialistRepository;
 
+use App\Service\Reservation\ReservationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +47,7 @@ class SpecialistController extends AbstractController
         }
 
         $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
-        $reservations = $reservationRepository->getAllPastReservationsBySpecialist($specialist);
+        $reservations = $reservationRepository->getAllPastReservations($specialist);
 
         return $this->render('specialist/customermanagement.html.twig', [
             'specialist' => $specialist,
@@ -54,6 +55,20 @@ class SpecialistController extends AbstractController
             'begunReservations' => null,
             'alertMessage' => null
         ]);
+    }
+
+    /**
+     * @Route("/customers/management/update", name="customer_management_update")
+     */
+    public function customerManagementUpdate(UrlGeneratorInterface $urlGenerator, ReservationService $reservationService): Response
+    {
+        if ($this->isGranted('IS_ANONYMOUS')) {
+            return new RedirectResponse($urlGenerator->generate('home'));
+        }
+
+        $reservationService->endPastReservations();
+
+        return new RedirectResponse($urlGenerator->generate('customer_management'));
     }
 
 
