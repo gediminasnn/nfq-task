@@ -30,14 +30,13 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
             ->getResult();
     }
 
-    public function getFiveUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
+    public function getFiveUpcomingPendingReservationsBySpecialist(Specialist $specialist): ?array
     {
 
         return $this->createQueryBuilder('r')
             ->where('r.specialist = :specId')
             ->andWhere('r.state = :state1')
-            ->orWhere('r.state = :state2')
-            ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
+            ->setParameters(['specId' => $specialist, 'state1' => 'pending'])
             ->orderBy('r.startTime', 'ASC')
             ->setMaxResults('5')
             ->getQuery()
@@ -161,6 +160,16 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
         $q->execute();
     }
 
+    public function getAllPastReservationsBySpecialist(Specialist $specialist): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.specialist = :specId')
+            ->andWhere('r.endTime < :now')
+            ->setParameters(['specId' => $specialist, 'now' => date("Y-m-d H:i:s")])
+            ->orderBy('r.startTime', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects

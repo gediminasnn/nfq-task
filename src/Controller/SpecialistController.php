@@ -36,5 +36,25 @@ class SpecialistController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/customers/management/inverse", name="customer_management_inverse")
+     */
+    public function customerManagementPanelInverse(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
+    {
+        if ($this->isGranted('IS_ANONYMOUS')) {
+            return new RedirectResponse($urlGenerator->generate('home'));
+        }
+
+        $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
+        $reservations = $reservationRepository->getAllPastReservationsBySpecialist($specialist);
+
+        return $this->render('specialist/customermanagement.html.twig', [
+            'specialist' => $specialist,
+            'reservations' => $reservations,
+            'begunReservations' => null,
+            'alertMessage' => null
+        ]);
+    }
+
 
 }
