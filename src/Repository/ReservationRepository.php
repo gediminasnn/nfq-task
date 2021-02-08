@@ -48,9 +48,9 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     public function getAllUpcomingValidReservationsBySpecialist(Specialist $specialist): ?array
     {
         return $this->createQueryBuilder('r')
-            ->where('r.specialist = :specId')
-            ->andWhere('r.state = :state1')
+            ->where('r.state = :state1')
             ->orWhere('r.state = :state2')
+            ->andWhere('r.specialist = :specId')
             ->setParameters(['specId' => $specialist, 'state1' => 'pending', 'state2' => 'begun'])
             ->orderBy('r.startTime', 'ASC')
             ->getQuery()
