@@ -36,7 +36,7 @@ class ReservationService
     }
 
 
-    public function endPastReservations(): void
+    public function updatePastReservations(): void
     {
         $qb = $this->reservationRepository->createQueryBuilder('r');
 
