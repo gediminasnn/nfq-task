@@ -19,7 +19,7 @@ class CustomerController extends AbstractController
     public function newVisitButtonForCustomer(UrlGeneratorInterface $urlGenerator): Response
     {
         if ($this->isGranted('ROLE_SPECIALIST')) {
-            return new RedirectResponse($urlGenerator->generate('specialist'));
+            return new RedirectResponse($urlGenerator->generate('customer_management'));
         }
         return $this->render('home/index.html.twig');
     }

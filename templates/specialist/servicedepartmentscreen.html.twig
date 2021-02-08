@@ -22,6 +22,27 @@
     {#                        {{ specialists[1].code }}#}
                             {% for specialist in specialists %}
                                 <h5 class="card-title">Current queue with specialist : {{ specialist.code }}</h5>
+
+                                {% if reservationRepo.getAllBegunReservationBySpecialist(specialist) %}
+                                    {% for reservation in reservationRepo.getAllBegunReservationBySpecialist(specialist) %}
+                                        <div class="col-lg-2">
+                                            <h3 style="color: #2ca02c">ACTIVE</h3>
+                                            <div class="rounded card">
+                                                <div class="card-header">
+                                                    Appointment : <b>{{ reservation.code }}</b>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="card-text">Specialist : <b>{{ specialist.code }}</b></p>
+                                                    <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
+                                                    <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
+                                                    <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b></p>
+                                                    <p class="card-text">Ends at : <b>{{ reservation.endTime|format_datetime() }}</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
                                 {% for reservation in reservationRepo.getFiveUpcomingValidReservationsBySpecialist(specialist) %}
                                     <div class="col-lg-2">
                                         <h3>Queue : #{{ loop.index }}</h3>

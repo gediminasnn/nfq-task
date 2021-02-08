@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Repository\ReservationRepository;
 use App\Repository\SpecialistRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -13,20 +15,24 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SpecialistController extends AbstractController
 {
     /**
-     * @Route("/customers/management", name="specialist")
+     * @Route("/customers/management/", name="customer_management")
      */
-    public function customerManagementPanel(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
+    public function customerManagementPanel(Request $request, UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
     {
         if ($this->isGranted('IS_ANONYMOUS')) {
             return new RedirectResponse($urlGenerator->generate('home'));
         }
 
         $specialist = $specialistRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
-        $reservations = $reservationRepository->getAllUpcomingValidReservationsBySpecialist($specialist);
+        $reservations = $reservationRepository->getAllUpcomingPendingReservationsBySpecialist($specialist);
+        $begunReservations = $reservationRepository->getAllBegunReservationBySpecialist($specialist);
+        $alertMessage = $request->query->get('alertMessage');
 
         return $this->render('specialist/customermanagement.html.twig', [
             'specialist' => $specialist,
-            'reservations' => $reservations
+            'reservations' => $reservations,
+            'begunReservations' => $begunReservations,
+            'alertMessage' => $alertMessage
         ]);
     }
 

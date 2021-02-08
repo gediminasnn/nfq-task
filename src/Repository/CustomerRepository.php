@@ -22,13 +22,10 @@ class CustomerRepository extends ServiceEntityRepository implements CodesInterfa
 
     public function getAllEntityCodes(): array
     {
-        $allCodes = [];
-        $customers = $this->findAll();
-        foreach ($customers as $customer) {
-            $allCodes[] = $customer->getCode();
-        }
-
-        return $allCodes;
+        return $this->createQueryBuilder('r')
+            ->select('code')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
