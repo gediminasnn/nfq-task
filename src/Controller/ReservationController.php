@@ -28,18 +28,7 @@ class ReservationController extends AbstractController
         $this->urlGenerator = $urlGenerator;
     }
 
-    //  TODO : make working newReservationPanel method
 
-    /**
-     * @Route("/reservations/new", name="new_reservation_panel")
-     */
-    public function newReservationPanel(): Response
-    {
-        if ($this->isGranted('ROLE_SPECIALIST')) {
-            return new RedirectResponse($this->urlGenerator->generate('specialist'));
-        }
-        return $this->render();
-    }
 
 
 
