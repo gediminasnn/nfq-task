@@ -22,8 +22,8 @@ class CustomerRepository extends ServiceEntityRepository implements CodesInterfa
 
     public function findAllEntityCodes(): array
     {
-        return $this->createQueryBuilder('r')
-            ->select('code')
+        return $this->createQueryBuilder('c')
+            ->select('c.code')
             ->getQuery()
             ->getResult();
     }

@@ -40,7 +40,7 @@ class SpecialistRepository extends ServiceEntityRepository implements PasswordUp
     public function findAllEntityCodes(): array
     {
         return $this->createQueryBuilder('r')
-            ->select('code')
+            ->select('r.code')
             ->getQuery()
             ->getResult();
     }

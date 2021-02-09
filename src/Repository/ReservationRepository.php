@@ -25,7 +25,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
     public function findAllEntityCodes(): array
     {
         return $this->createQueryBuilder('r')
-            ->select('code')
+            ->select('r.code')
             ->getQuery()
             ->getResult();
     }
