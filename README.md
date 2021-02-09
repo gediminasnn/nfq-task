@@ -78,11 +78,11 @@ Now check out the site at `https://localhost:8000`
 Have fun!
 
 # Project demo
-###Customer's home screen
+### Customer's home screen
 ![Customer's home screen](https://user-images.githubusercontent.com/70708109/107275637-b323c980-6a5a-11eb-8c54-3de35a823bc7.png)
-###Customer's appointment screen
+### Customer's appointment screen
 ![Customer's appointment screen](https://user-images.githubusercontent.com/70708109/107275716-cafb4d80-6a5a-11eb-9f82-a3a7bdf392d1.png)
-###Specialist's Customer Management screen
+### Specialist's Customer Management screen
 ![Specialists Customer Management screen](https://user-images.githubusercontent.com/70708109/107275383-52948c80-6a5a-11eb-86d0-70638c0b8dac.png)
-###Service deparatment's screen
+### Service deparatment's screen
 ![Service department screen](https://user-images.githubusercontent.com/70708109/107275364-4f010580-6a5a-11eb-9cb9-8403c0d93d34.png)
