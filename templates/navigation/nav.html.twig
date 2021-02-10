@@ -7,16 +7,25 @@
             <a class="navbar-brand" href="{{ path('home') }}">NFQ Service Departament</a>
             <div class="navbar-nav me-auto">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('new_reservation_panel') }}">new</a></li>
+                    {% if not app.user %}
+                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('home') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('new_reservation_panel') }}">new</a></li>
+                    {% endif %}
+                    {% if app.user %}
+                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('customer_management') }}">Customer Management</a></li>
+                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('service_department') }}">SDP</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="navbar-nav mr-auto">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('customer_management') }}">CMP</a></li>
-                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('service_department') }}">SDP</a></li>
-                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('app_register') }}">Register</a></li>
-                    <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('app_login') }}">Login</a></li>
+                    {% if app.user %}
+                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('app_logout') }}">Logout</a></li>
+                    {% endif %}
+                    {% if not app.user %}
+                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('app_login') }}">Login</a></li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
