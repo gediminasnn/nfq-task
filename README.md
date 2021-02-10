@@ -1,7 +1,7 @@
 # nfq-task
 Customer service department system task made for a job interview.
-
-Demo URL : _currently not available_
+ 
+Demo URL : https://nfqservicedepartmenttask.herokuapp.com/ 
 
 ## Setup
 
