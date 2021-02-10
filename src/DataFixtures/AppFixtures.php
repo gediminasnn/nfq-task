@@ -32,38 +32,38 @@ class AppFixtures extends Fixture
             $specialist->setRoles(['ROLE_SPECIALIST']);
             $manager->persist($specialist);
 
-            //Creating 6 Reservations with 6 different customers with current loop cycle specialist
-            for ($y = 1; $y <= 6; $y++) {
-                $customer = new Customer();
-                $customer->setCode("{$i}RCST{$y}");
-                $manager->persist($customer);
-
-                $reservation = new Reservation();
-                $reservation->setCode("{$i}RRSR{$y}");
-                $reservation->setCustomer($customer);
-                $reservation->setSpecialist($specialist);
-                $date = new \DateTime("now");
-                $reservation->setStartTime($date->sub(new \DateInterval("P{$y}D")));
-                $date = new \DateTime("now");
-                $reservation->setEndTime($date->sub(new \DateInterval("PT23H15M")));
-                $manager->persist($reservation);
-
-
-
-                $customer = new Customer();
-                $customer->setCode("{$i}CSTM{$y}");
-                $manager->persist($customer);
-
-                $reservation = new Reservation();
-                $reservation->setCode("{$i}RSRV{$y}");
-                $reservation->setCustomer($customer);
-                $reservation->setSpecialist($specialist);
-                $date2 = new \DateTime("now");
-                $reservation->setStartTime($date2->add(new \DateInterval("P{$y}D")));
-                $date2 = new \DateTime("now");
-                $reservation->setEndTime($date2->add(new \DateInterval("P{$y}DT45M")));
-                $manager->persist($reservation);
-            }
+//            //Creating 6 Reservations with 6 different customers with current loop cycle specialist
+//            for ($y = 1; $y <= 6; $y++) {
+//                $customer = new Customer();
+//                $customer->setCode("{$i}RCST{$y}");
+//                $manager->persist($customer);
+//
+//                $reservation = new Reservation();
+//                $reservation->setCode("{$i}RRSR{$y}");
+//                $reservation->setCustomer($customer);
+//                $reservation->setSpecialist($specialist);
+//                $date = new \DateTime("now");
+//                $reservation->setStartTime($date->sub(new \DateInterval("P{$y}D")));
+//                $date = new \DateTime("now");
+//                $reservation->setEndTime($date->sub(new \DateInterval("PT23H15M")));
+//                $manager->persist($reservation);
+//
+//
+//
+//                $customer = new Customer();
+//                $customer->setCode("{$i}CSTM{$y}");
+//                $manager->persist($customer);
+//
+//                $reservation = new Reservation();
+//                $reservation->setCode("{$i}RSRV{$y}");
+//                $reservation->setCustomer($customer);
+//                $reservation->setSpecialist($specialist);
+//                $date2 = new \DateTime("now");
+//                $reservation->setStartTime($date2->add(new \DateInterval("P{$y}D")));
+//                $date2 = new \DateTime("now");
+//                $reservation->setEndTime($date2->add(new \DateInterval("P{$y}DT45M")));
+//                $manager->persist($reservation);
+//            }
         }
 
         $manager->flush();
