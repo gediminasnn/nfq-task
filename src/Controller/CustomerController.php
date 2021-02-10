@@ -18,6 +18,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CustomerController extends AbstractController
 {
 
+    private $reservationRepository;
+
+    public function __construct(ReservationRepository $reservationRepository)
+    {
+        $this->reservationRepository = $reservationRepository;
+    }
 
     /**
      * @Route("/", name="home")
@@ -48,42 +54,28 @@ class CustomerController extends AbstractController
         $customerRepository = $this->getDoctrine()->getRepository(Customer::class);
         $code = $codeGenerator->generateCode($customerRepository);
         $customer->setCode($code);
-
         $em->persist($customer);
 
 
-
-
-//        $reservationTimeInterval = 30;
-
         $reservation = new Reservation();
-        $reservationRepository = $this->getDoctrine()->getRepository(Reservation::class);
-        $code = $codeGenerator->generateCode($reservationRepository);
-        $reservation->setCode($code);
+        $reservation->setCode($codeGenerator->generateCode($this->reservationRepository));
         $reservation->setState("pending");
         $reservation->setCustomer($customer);
 
         $earliestSpecialist = $specialistService->findSpecialistWithEarliestTime();
-
         $earliestTime = $specialistService->findEarliestFreeTime($earliestSpecialist)->format("Y-m-d H:i:s");
-
-
         $dateStart = new \DateTime($earliestTime);
-        $dateEnd = new \DateTime($earliestTime);
-        $dateEnd = $dateEnd->add(new \DateInterval("PT30M"));
-//        dd($dateStart);
+        $dateEnd = (new \DateTime($earliestTime))->add(new \DateInterval("PT30M"));
+
         $reservation->setStartTime($dateStart);
         $reservation->setEndTime($dateEnd);
-
-
         $reservation->setSpecialist($earliestSpecialist);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($reservation);
+
         $em->flush();
 
-
-//        return new RedirectResponse($urlGenerator->generate('home'));
         return new RedirectResponse($urlGenerator->generate('reservation_panel',['reservationCode' => $reservation->getCode()]));
     }
 
@@ -92,15 +84,22 @@ class CustomerController extends AbstractController
      * @param $reservationCode
      * @return Response
      */
-    public function reservationPanel($reservationCode, ReservationRepository $reservationRepository): Response
+    public function reservationPanel($reservationCode): Response
     {
-        $reservation = $reservationRepository->findOneBy(['code' => $reservationCode]);
+        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
         if (!$reservation) {
             throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
         }
 
-        $reservationQueuePosition = $reservationRepository->findReservationQueuePosition($reservation);
+        $reservationQueuePosition = $this->reservationRepository->findReservationQueuePosition($reservation);
+
         $timeLeft = $reservation->getStartTime()->diff(new \DateTime('now'));
+        $dateTimeNow = (new \DateTime("now"))->format("Y-m-d H:i:s");
+
+        if($reservation->getStartTime()->format("Y-m-d H:i:s") <= $dateTimeNow)
+        {
+            $timeLeft = null;
+        }
 
         return $this->render('reservation/reservation.html.twig', [
             'reservation' => $reservation,

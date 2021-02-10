@@ -29,9 +29,6 @@ class ReservationController extends AbstractController
     }
 
 
-
-
-
     /**
      * @Route("/reservations/update/{reservationCode}/begun", name="begin_reservation")
      * @param $reservationCode
