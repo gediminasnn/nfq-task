@@ -21,10 +21,9 @@
                             <h3 style="color: #2ca02c">ACTIVE</h3>
                             <div class="rounded card">
                                 <div class="card-header">
-                                    Appointment : <b>{{ reservation.code }}</b>
+                                    <h4>Appointment : <b>{{ reservation.code }}</b></h4>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">Specialist : <b>{{ specialist.code }}</b></p>
                                     <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
                                     <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
                                     <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b></p>
@@ -53,11 +52,10 @@
                         <h3>#{{ loop.index }}</h3>
                         <div class="rounded card">
                             <div class="card-header">
-                                Appointment : <b>{{ reservation.code }}</b>
+                                <h4>Appointment : <b>{{ reservation.code }}</b></h4>
                             </div>
                             <div class="card-body">
 
-                                <p class="card-text">Specialist : <b>{{ reservation.specialist.code }}</b></p>
                                 <p class="card-text">Customer : <b>{{ reservation.customer.code }}</b></p>
                                 <p class="card-text">Current visit state : <b>{{ reservation.state }}</b></p>
                                 <p class="card-text">Starts at : <b>{{ reservation.startTime|format_datetime() }}</b>

@@ -32,7 +32,7 @@
                             <h3>Queue : #{{ reservationQueuePosition }}</h3>
                             <div class="rounded card">
                                 <div class="card-header">
-                                    Appointment : <b>{{ reservation.code }}</b>
+                                    <h2>Appointment : <b>{{ reservation.code }}</b></h2>
                                 </div>
                                 <div class="card-body">
 
@@ -48,8 +48,9 @@
                         </div>
                     </div>
                     <br>
+                    {% if timeLeft %}
                     <p class="card-text">Time left before the visit : {{ timeLeft|date("%Y Years %m Months %d  Days %H Hours %i Minutes and %s Seconds") }}</p>
-
+                    {% endif %}
                 </div>
             </div>
         </div>
