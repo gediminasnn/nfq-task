@@ -77,12 +77,26 @@ Now check out the site at `https://localhost:8000`
 
 Have fun!
 
-# Project demo
+# How to use
+
 ### Customer's home screen
-![Customer's home screen](https://user-images.githubusercontent.com/70708109/107275637-b323c980-6a5a-11eb-8c54-3de35a823bc7.png)
+Link - https://nfqservicedepartment.herokuapp.com/ 
+
+This is main customer's homepage, customer can click on the green button to make new reservation with specialist:
+![Customer's home screen](https://user-images.githubusercontent.com/70708109/107633524-d6c05d00-6c70-11eb-9f03-c8c2cbcbd956.png)
 ### Customer's appointment screen
-![Customer's appointment screen](https://user-images.githubusercontent.com/70708109/107275716-cafb4d80-6a5a-11eb-9f82-a3a7bdf392d1.png)
+Link - https://nfqservicedepartment.herokuapp.com/reservations/new/
+
+When customer clicks homepage green button, he will be redirected to new appointment reservation page that shows all details about 
+upcoming reservation. Customer can cancel the visit at any time in this page by clicking red button: 
+![Customer's appointment screen](https://user-images.githubusercontent.com/70708109/107635072-3586d600-6c73-11eb-863b-01e2771d4a7a.png)
 ### Specialist's Customer Management screen
-![Specialists Customer Management screen](https://user-images.githubusercontent.com/70708109/107275383-52948c80-6a5a-11eb-86d0-70638c0b8dac.png)
+Link - https://nfqservicedepartment.herokuapp.com/customers/management/
+
+This is main specialist's homepage, specialist can manage his reservations here.
+![Specialists Customer Management screen](https://user-images.githubusercontent.com/70708109/107633528-d6c05d00-6c70-11eb-886f-5c8d78c6ed46.png)
 ### Service deparatment's screen
-![Service department screen](https://user-images.githubusercontent.com/70708109/107275364-4f010580-6a5a-11eb-9cb9-8403c0d93d34.png)
+Link - https://nfqservicedepartment.herokuapp.com/servicedeparatment/
+
+This is service department screen, this page's purpose is only to display current upcoming specialist's reservations:
+![Service department screen](https://user-images.githubusercontent.com/70708109/107633522-d627c680-6c70-11eb-82f0-4edb5098238a.png)
