@@ -100,3 +100,7 @@ Link - https://nfqservicedepartment.herokuapp.com/servicedeparatment/
 
 This is service department screen, this page's purpose is only to display current upcoming specialist's reservations:
 ![Service department screen](https://user-images.githubusercontent.com/70708109/107633522-d627c680-6c70-11eb-82f0-4edb5098238a.png)
+### Additional links
+Page to register new specialists - https://nfqservicedepartment.herokuapp.com/register/
+
+Specialist's login page - https://nfqservicedepartment.herokuapp.com/login/
