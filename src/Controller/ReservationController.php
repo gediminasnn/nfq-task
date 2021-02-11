@@ -67,6 +67,9 @@ class ReservationController extends AbstractController
      */
     public function changeReservationStateToEnded($reservationCode): Response
     {
+        if (!$this->isGranted('ROLE_SPECIALIST')) {
+            return new RedirectResponse($this->urlGenerator->generate('home'));
+        }
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
         if (!$reservation) {
             throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
@@ -92,37 +95,44 @@ class ReservationController extends AbstractController
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 
-    /**
-     * @Route("/reservations/delete/{reservationCode}", name="delete_reservation")
-     * @param $reservationCode
-     * @return Response
-     */
-    public function deleteReservation($reservationCode): Response
-    {
-        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
-        if (!$reservation) {
-            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
-        }
-        $this->reservationRepository->removeReservation($reservation);
-
-        return new RedirectResponse($this->urlGenerator->generate('home'));
-    }
-
-    /**
-     * @Route("/reservations/update/past", name="update_past_reservations")
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param ReservationService $reservationService
-     * @return Response
-     */
-    public function updatePastReservations(UrlGeneratorInterface $urlGenerator, ReservationService $reservationService): Response
-    {
-        if ($this->isGranted('IS_ANONYMOUS')) {
-            return new RedirectResponse($urlGenerator->generate('home'));
-        }
-
-        $reservationService->updatePastReservations();
-
-        return new RedirectResponse($urlGenerator->generate('customer_management'));
-    }
+//unused methods
+//    /**
+//     * @Route("/reservations/delete/{reservationCode}", name="delete_reservation")
+//     * @param $reservationCode
+//     * @return Response
+//     */
+//    public function deleteReservation($reservationCode): Response
+//    {
+//        if (!$this->isGranted('ROLE_SPECIALIST')) {
+//            return new RedirectResponse($this->urlGenerator->generate('home'));
+//        }
+//        $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
+//        if (!$reservation) {
+//            throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
+//        }
+//        $this->reservationRepository->removeReservation($reservation);
+//
+//        return new RedirectResponse($this->urlGenerator->generate('home'));
+//    }
+//
+//    /**
+//     * @Route("/reservations/update/past", name="update_past_reservations")
+//     * @param UrlGeneratorInterface $urlGenerator
+//     * @param ReservationService $reservationService
+//     * @return Response
+//     */
+//    public function updatePastReservations(UrlGeneratorInterface $urlGenerator, ReservationService $reservationService): Response
+//    {
+//        if (!$this->isGranted('ROLE_SPECIALIST')) {
+//            return new RedirectResponse($this->urlGenerator->generate('home'));
+//        }
+//        if ($this->isGranted('IS_ANONYMOUS')) {
+//            return new RedirectResponse($urlGenerator->generate('home'));
+//        }
+//
+//        $reservationService->updatePastReservations();
+//
+//        return new RedirectResponse($urlGenerator->generate('customer_management'));
+//    }
 
 }
