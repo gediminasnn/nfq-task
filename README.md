@@ -1,5 +1,5 @@
 # nfq-task
-Customer service department system task made for a job interview.
+Customer service department system task made for a internship interview.
 
 Task itself :
 
