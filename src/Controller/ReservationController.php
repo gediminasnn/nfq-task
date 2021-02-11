@@ -38,7 +38,7 @@ class ReservationController extends AbstractController
     public function changeReservationStateToBegun($reservationCode, ReservationService $reservationService): Response
     {
         if (!$this->isGranted('ROLE_SPECIALIST')) {
-            return new RedirectResponse($this->urlGenerator->generate('home'));
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
 
         $reservationToUpdate = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
@@ -68,7 +68,7 @@ class ReservationController extends AbstractController
     public function changeReservationStateToEnded($reservationCode): Response
     {
         if (!$this->isGranted('ROLE_SPECIALIST')) {
-            return new RedirectResponse($this->urlGenerator->generate('home'));
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
         if (!$reservation) {

@@ -19,7 +19,7 @@ class ServiceDepartmentController extends AbstractController
     public function serviceDepartmentPanel(UrlGeneratorInterface $urlGenerator, SpecialistRepository $specialistRepository, ReservationRepository $reservationRepository): Response
     {
         if ($this->isGranted('IS_ANONYMOUS')) {
-            return new RedirectResponse($urlGenerator->generate('home'));
+            return new RedirectResponse($urlGenerator->generate('app_login'));
         }
 
         $specialists = $specialistRepository->findAll();
