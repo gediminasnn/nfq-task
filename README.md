@@ -46,6 +46,8 @@ database (`doctrine:database:drop --force`) and try again.
 After fully creating both database and migrating migrations you 
 can now safely store pre-made(dummy) data into the database using fixtures.
 
+*Note : you must be in dev environment to run fixures, if you are in prod you must create all information manually.*
+
 To load fixtures, just run:
 ```
 php bin/console doctrine:fixtures:load
