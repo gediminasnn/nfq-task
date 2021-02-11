@@ -48,6 +48,9 @@ class CustomerController extends AbstractController
      */
     public function newReservationPanel(UrlGeneratorInterface $urlGenerator, CodeGeneratorService $codeGenerator, SpecialistService $specialistService): Response
     {
+        if ($this->isGranted('ROLE_SPECIALIST')) {
+            return new RedirectResponse($urlGenerator->generate('customer_management'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $customer = new Customer();
@@ -84,14 +87,14 @@ class CustomerController extends AbstractController
      * @param $reservationCode
      * @return Response
      */
-    public function reservationPanel($reservationCode): Response
+    public function reservationPanel($reservationCode, ReservationService $reservationService): Response
     {
         $reservation = $this->reservationRepository->findOneBy(['code' => $reservationCode]);
         if (!$reservation) {
             throw new NotFoundHttpException("The reservation (code :{$reservationCode}) doesn't exist");
         }
 
-        $reservationQueuePosition = $this->reservationRepository->findReservationQueuePosition($reservation);
+        $reservationQueuePosition = $reservationService->findReservationQueuePosition($reservation);
 
         $timeLeft = $reservation->getStartTime()->diff(new \DateTime('now'));
         $dateTimeNow = (new \DateTime("now"))->format("Y-m-d H:i:s");

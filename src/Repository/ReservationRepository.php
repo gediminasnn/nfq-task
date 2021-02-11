@@ -114,19 +114,7 @@ class ReservationRepository extends ServiceEntityRepository implements CodesInte
 
     }
 
-    public function findReservationQueuePosition(Reservation $reservation): ?int
-    {
-        $result = null;
-        $reservations = $this->findAllUpcomingPendingReservationsBySpecialist($reservation->getSpecialist());
-        $count = count($reservations);
-        for ($i = 1; $i <= $count; $i++) {
-            if ($reservations[$i - 1]->getCode() === $reservation->getCode()) {
-                $result = $i;
-                break;
-            }
-        }
-        return $result;
-    }
+
 
     public function updateReservationStateToBegun(Reservation $reservation): void
     {
