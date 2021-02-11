@@ -9,7 +9,6 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if not app.user %}
                         <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('home') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('new_reservation_panel') }}">new</a></li>
                     {% endif %}
                     {% if app.user %}
                         <li class="nav-item"><a class="nav-link " aria-current="page" href="{{ path('customer_management') }}">Customer Management</a></li>
