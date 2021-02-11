@@ -99,6 +99,8 @@ database (`doctrine:database:drop --force`) and try again.
 After fully creating both database and migrating migrations you 
 can now safely store pre-made(dummy) data into the database using fixtures.
 
+*Note : you must be in dev environment to run fixures, if you are in prod you must create all information manually.*
+
 To load fixtures, just run:
 ```
 php bin/console doctrine:fixtures:load
@@ -129,3 +131,34 @@ Now check out the site at `https://localhost:8000`
 
 
 Have fun!
+<<<<<<< HEAD
+=======
+
+# How to use
+
+### Customer's home screen
+Link - https://nfqservicedepartment.herokuapp.com/ 
+
+This is main customer's homepage, customer can click on the green button to make new reservation with specialist:
+![Customer's home screen](https://user-images.githubusercontent.com/70708109/107633524-d6c05d00-6c70-11eb-9f03-c8c2cbcbd956.png)
+### Customer's appointment screen
+Link - https://nfqservicedepartment.herokuapp.com/reservations/new/
+
+When customer clicks homepage green button, he will be redirected to new appointment reservation page that shows all details about 
+upcoming reservation. Customer can cancel the visit at any time in this page by clicking red button: 
+![Customer's appointment screen](https://user-images.githubusercontent.com/70708109/107635072-3586d600-6c73-11eb-863b-01e2771d4a7a.png)
+### Specialist's Customer Management screen
+Link - https://nfqservicedepartment.herokuapp.com/customers/management/
+
+This is main specialist's homepage, specialist can manage his reservations here.
+![Specialists Customer Management screen](https://user-images.githubusercontent.com/70708109/107633528-d6c05d00-6c70-11eb-886f-5c8d78c6ed46.png)
+### Service deparatment's screen
+Link - https://nfqservicedepartment.herokuapp.com/servicedeparatment/
+
+This is service department screen, this page's purpose is only to display current upcoming specialist's reservations:
+![Service department screen](https://user-images.githubusercontent.com/70708109/107633522-d627c680-6c70-11eb-82f0-4edb5098238a.png)
+### Additional links
+Page to register new specialists - https://nfqservicedepartment.herokuapp.com/register/
+
+Specialist's login page - https://nfqservicedepartment.herokuapp.com/login/
+>>>>>>> badc42e31a2b0a56524595630cab3cc7836fafc2
